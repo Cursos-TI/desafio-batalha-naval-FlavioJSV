@@ -8,7 +8,7 @@ int main () {
   printf("\n TABULEIRO BATALHA NAVAL");
   printf("\n   ");//Espaço na primeira linha para ficar alinhado com o tabuleiro.
   
-  for ( int c = 0; c < 10; c++){//Imprimindo a coluna (A a J).
+  for ( int c = 0; c < 10; c++){//Imprimindo a coluna (A a J)
     printf("%c ", coluna[c]);
   }
 
