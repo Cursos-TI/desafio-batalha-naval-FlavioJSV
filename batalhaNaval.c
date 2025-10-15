@@ -83,7 +83,7 @@ int main () {
           break;                     
         
         default:
-          printf("\nEntrada Invalida!\n");            
+          printf("\nEntrada Invalida!");            
       }  
         
       //Criando tabuleiro.
