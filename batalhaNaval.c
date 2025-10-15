@@ -1,36 +1,111 @@
 #include<stdio.h>
 
-int main () {
-  
-  int tabuleiro [10][10] = {0};
-  char coluna[10] = {'A','B','C','D','E','F','G','H','I','J'};  
+void limparTabuleiro(int tabuleiro[10][10]){ //Condição para limpar o tabuleito.
+    for (int i = 0; i < 10; i++){
+        for (int j = 0; j < 10; j++){
+            tabuleiro[i][j] = 0;
+        }
+    }
+}
 
-  printf("\n TABULEIRO BATALHA NAVAL");
-  printf("\n   ");//Espaço na primeira linha para ficar alinhado com o tabuleiro.
-  
-  for ( int c = 0; c < 10; c++){//Imprimindo a coluna (A a J)
-    printf("%c ", coluna[c]);
-  }
 
-  //Loop dos posicionamentos.
-  for ( int h = 3; h <= 5 ; h++){//posicionamento horizontal.
-    tabuleiro[2][h] = 3;
-      for (int v = 5; v <= 7 ; v++){//posicionamento vertical.
-        tabuleiro[v][7] = 3;
+int main () {  
+
+  char coluna[] = {'A','B','C','D','E','F','G','H','I','J'}; //Declaração da coluna.
+  int tabuleiro[10][10] = {0}; //Declaração da matriz 10x10.
+  int opcao;        
+
+    do{ //Loop (do-while) para escolhe as opçãos.      
+      printf("\n  JOGO BATALHA NAVAL!!");    
+      printf("\nDigite a opção desejada!\n");    
+      printf("1 - Horizontal e Vertical\n");
+      printf("2 - Diagonais\n");
+      printf("3 - Cone\n");
+      printf("4 - Cruz\n");
+      printf("5 - Octaedro\n");
+      printf("0 - Sair do Programa\n");
+      scanf("%d", &opcao);
+
+      if (opcao >= 1 && opcao <= 5){
+        limparTabuleiro(tabuleiro); //Limpando tabuleiro após cada opção impressa.
       }      
-  }
+       
+        switch (opcao){
+        case 1: //Imprimindo horizontais e verticais.          
+            for (int h = 2 ; h <= 4 ; h++){
+            tabuleiro[0][h] = 3; //Posicionamento Horizontal.
+              tabuleiro[h][8] = 3; //Posicionamento Vertical.
+            }
+        break;     
+        
+        case 2: //imprimindo diaginais.            
+            for (int i = 2; i <= 4 ; i++){
+              tabuleiro[i][i] = 3; //Esquerda para direita.       
+              tabuleiro[i][9 - i] = 3; //Direita para esquerda.
+            }              
+        break; 
+        
+        case 3: //imprimindo Cone.
+            for (int i = 0; i < 5; i++){ //Limite do cone.
+              for (int j = 0; j < 10; j++){ //Imprimindo da esquerda para direita.            
+                if (j >= 4 - i && j <= 4 + i){ //Desenhando a base descendo.
+                  tabuleiro[i + 2][j] = 3; //Começa na linha 2 e termina na 9.
+                }
+              }
+            }            
+        break;
 
-  //tabuleiro 10x10.
-  for ( int i = 0; i < 10 ; i++){
-    printf("\n");
-    printf("%-3d", i + 1);//Imprimindo os números de 1 a 10 na vertical.
-    
-      for ( int j = 0; j < 10; j++){
-        printf("%d ", tabuleiro[i][j]);//Imprimindo todo tabuleiro.    
-      }      
-  }
+        case 4: //Imprimindo uma cruz.
+            for (int i = 2; i < 8; i++){ //Linha começa da 2 e termina na 8.
+              for (int j = 2; j < 8; j++){ //Coluna começa na 2 e termina na 8.
+                if (i == 4 || j == 4){ //Centro do tabuleiro.
+                    tabuleiro[i][j] = 3;
+                }
+              }
+            }            
+        break;
 
-return 0;
+        case 5: //Imprimindo Octaedro.
+            for(int i = 0; i < 10; i++){
+              for(int j = 0; j < 10; j++){       
+                  int di = (i - 4 < 0) ? 4 - i : i - 4; //Centralizando a linha.    
+                  int dj = (j - 4 < 0) ? 4 - j : j - 4; //Centralizando a coluna.
+                  
+                  if(di + dj <= 4) {//Definido o tamanho
+                      tabuleiro[i][j] = 3;
+                  }
+              }              
+            }
+        break;
+
+        case 0:           
+          printf("\nSaindo do Programa..."); 
+          break;                     
+        
+        default:
+          printf("\nEntrada Invalida!\n");            
+      }  
+        
+      //Criando tabuleiro.
+      if (opcao < 6 && opcao > 0){ //Apos cada opção válida, imprime novamente o tabuleiro.
+         for (int c = 0; c < 10; c++){        
+          printf("  %c", coluna[c]); //Imprime coluna (A a J). 
+         }
+          
+          for (int i = 0; i < 10; i++){    
+              printf("\n"); //Pulando linha nas linhas (1 a 10).
+                printf("%-2d", i + 1); //Imprimindo linhas e adc +1 para imprimir a partir do 1 e não do 0.
+                  for (int y = 0; y < 10; y++){
+                    printf("%d  ", tabuleiro[i][y]); //Imprimindo tabuleiro 10x10.
+                  }      
+        
+          }
+      }printf("\n");       
+    }
+
+    while (opcao != 0); //Se a entrada for maior que 6 ou 0, volta ao menu inicial
+     
+  return 0;
 };
 
 /*#include <stdio.h>
